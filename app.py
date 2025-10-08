@@ -2,6 +2,13 @@ import time, math, requests
 import pandas as pd
 import numpy as np
 from dateutil import tz
+import os
+import platform
+
+print("Python:", platform.python_version(), flush=True)
+
+TELEGRAM_TOKEN  = os.getenv("TELEGRAM_TOKEN")
+TELEGRAM_CHAT_ID= os.getenv("TELEGRAM_CHAT_ID")
 
 # -------- CONFIG --------
 PAIRS_PER_SCAN      = 20        # newest pairs to check each loop
@@ -19,6 +26,8 @@ TELEGRAM_CHAT_ID= os.getenv("TELEGRAM_CHAT_ID")
 
 # -------- HELPERS --------
 def send_tg(msg: str):
+send_tg("👋 Scanner started")
+    
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         print("Telegram not configured; skipping message.")
         return
