@@ -1,4 +1,4 @@
-# ---- app.py (top section: safe to paste) ----
+# ---- app.py (safe header) ----
 import os
 import time, math, requests
 import pandas as pd
@@ -25,17 +25,15 @@ def send_tg(msg: str) -> None:
         print("TG error:", e)
 
 def main() -> None:
-    # TODO: put your scan loop here later
     send_tg("👋 Scanner started")
     print("Scanner starting...", flush=True)
     while True:
+        # TODO: replace this placeholder with scan_once()
         time.sleep(30)
-        # placeholder so the service stays alive
-        # replace with scan_once() when you’re ready
 
 if __name__ == "__main__":
     main()
-# ---- end paste ----
+# ---- end header ----
     
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         print("Telegram not configured; skipping message.")
