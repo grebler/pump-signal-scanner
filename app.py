@@ -3,12 +3,13 @@ import time, math, requests
 import pandas as pd
 import numpy as np
 import platform
+
 print("Python:", platform.python_version(), flush=True)
 
-TELEGRAM_TOKEN  = os.getenv("TELEGRAM_TOKEN")
-TELEGRAM_CHAT_ID= os.getenv("TELEGRAM_CHAT_ID")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
-def send_tg(msg: str):
+def send_tg(msg: str) -> None:
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         print("Telegram not configured; skipping message.")
         return
@@ -16,13 +17,14 @@ def send_tg(msg: str):
         requests.get(
             f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
             params={"chat_id": TELEGRAM_CHAT_ID, "text": msg, "parse_mode": "HTML"},
-            timeout=10
+            timeout=10,
         )
     except Exception as e:
         print("TG error:", e)
 
-# <- This call must be at column 0 (outside the function)
-send_tg("👋 Scanner started")
+if __name__ == "__main__":
+    send_tg("👋 Scanner started")
+    # main()  # <- call your main loop here when ready
     
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         print("Telegram not configured; skipping message.")
