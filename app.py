@@ -1,8 +1,8 @@
+import os
 import time, math, requests
 import pandas as pd
 import numpy as np
 from dateutil import tz
-import os
 import platform
 
 print("Python:", platform.python_version(), flush=True)
