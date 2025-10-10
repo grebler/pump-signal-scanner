@@ -2,30 +2,26 @@ import os
 import time, math, requests
 import pandas as pd
 import numpy as np
-from dateutil import tz
 import platform
-
 print("Python:", platform.python_version(), flush=True)
 
 TELEGRAM_TOKEN  = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID= os.getenv("TELEGRAM_CHAT_ID")
 
-# -------- CONFIG --------
-PAIRS_PER_SCAN      = 20        # newest pairs to check each loop
-INTERVAL_SECONDS     = 30       # scan cadence
-CANDLE_INTERVAL      = "1m"     # 1m candles (DexScreener)
-LOOKBACK             = 120      # candles to compute indicators
-MIN_ABS_VOLUME_USD   = 3000     # min avg(20) USD volume
-MIN_LIQ_USD          = 30000    # min liquidity
-ROC_WINDOW           = 5        # bars for market-cap ROC
-VOL_MULT_CONFIRM     = 1.5      # vol must be >1.5x 20-bar avg
-MIN_SIGNALS_REQUIRED = 2        # fire alert if >=2 rules pass
-
-TELEGRAM_TOKEN  = os.getenv("TELEGRAM_TOKEN")
-TELEGRAM_CHAT_ID= os.getenv("TELEGRAM_CHAT_ID")
-
-# -------- HELPERS --------
 def send_tg(msg: str):
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
+        print("Telegram not configured; skipping message.")
+        return
+    try:
+        requests.get(
+            f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage",
+            params={"chat_id": TELEGRAM_CHAT_ID, "text": msg, "parse_mode": "HTML"},
+            timeout=10
+        )
+    except Exception as e:
+        print("TG error:", e)
+
+# <- This call must be at column 0 (outside the function)
 send_tg("👋 Scanner started")
     
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
