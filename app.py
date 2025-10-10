@@ -1,3 +1,4 @@
+# ---- app.py (top section: safe to paste) ----
 import os
 import time, math, requests
 import pandas as pd
@@ -10,6 +11,7 @@ TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 def send_tg(msg: str) -> None:
+    """Send a Telegram message; safely no-ops if env vars missing."""
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         print("Telegram not configured; skipping message.")
         return
@@ -22,9 +24,18 @@ def send_tg(msg: str) -> None:
     except Exception as e:
         print("TG error:", e)
 
-if __name__ == "__main__":
+def main() -> None:
+    # TODO: put your scan loop here later
     send_tg("👋 Scanner started")
-    # main()  # <- call your main loop here when ready
+    print("Scanner starting...", flush=True)
+    while True:
+        time.sleep(30)
+        # placeholder so the service stays alive
+        # replace with scan_once() when you’re ready
+
+if __name__ == "__main__":
+    main()
+# ---- end paste ----
     
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
         print("Telegram not configured; skipping message.")
